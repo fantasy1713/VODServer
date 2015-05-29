@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyHtml.html</title>
+	
+    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+    <meta http-equiv="description" content="this is my page">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    
+    <style type="text/css">
+    	div.videopanel
+    	{
+    		width:960px;
+    	}
+    	div.videocontainer
+    	{
+    		width: 760px;
+    		height: 484px;
+    		float: left;
+    		background: black;
+    	}
+    	div.videoinfo
+    	{
+    		width: 180px;
+    		height: 464px;
+    		float: left;
+    		background: yellow;
+    		padding : 10px;
+    	}
+    </style>
+    
+  </head>
+  
+  <body>
+    <div class="videopanel">
+      <div class="videocontainer">
+        
+      </div>
+      <div class="videoinfo">
+         <fieldset>
+         	<legend>选择视频源</legend>
+         	<ul>
+         		<li><button type="button" >MPEG-DASH</button></li>
+      	    	<li><button type="button" >HTML5/FLASH</button></li>
+      	    </ul>
+      	    <div>
+      	    	<label for="ckb_adapt">开启自适应码率调整</label>
+      	    	<input id="ckb_adapt" type="checkbox">
+      	    	<br/>
+      	    	<label>当前视频码率</label>
+      	    	<label>1800kbps</label>
+      	    	<button type="button">+</button>
+      	    	<button type="button">-</button>
+      	    	<br/>
+      	    	<label>当前音频码率</label>
+      	    	<label>1800kbps</label>
+      	    	<button type="button">+</button>
+      	    	<button type="button">-</button>
+      	    	<br/>
+      	    	<label>下载速度</label>
+      	    	<label>100kb/s</label>
+      	    </div>
+         </fieldset>
+         <fieldset>
+         	<legend>视频信息</legend>
+         	<label>视频名称</label>
+         	<label>测试视频</label>
+         	<br/>
+         	<label>视频长度</label>
+         	<label>1h50m00s</label>
+         	<br/>
+         	<label>帧率</label>
+         	<label>30fps</label>
+         	<br/>
+         	<label>分辨率</label>
+         	<label>640*480</label>
+         </fieldset>
+      </div>
+    </div>
+  </body>
+</html>

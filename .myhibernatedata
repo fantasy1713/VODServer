@@ -1,0 +1,24 @@
+#MyEclipse Hibernate Properties
+#Sun Jan 12 19:07:31 CST 2014
+sessionFactoryName=com.vodserver.hibernate.HibernateSessionFactory
+genBasicCompId=false
+profile=
+daoSFId=
+version=4.1
+jndiPath=
+detectM2M=false
+reStrategyClass=
+detectO2O=false
+springDaoFile=
+useJavaTypes=true
+keyGenerator=identity
+libInstallFolder=WebRoot/WEB-INF/lib
+addLibs2Project=false
+genVersionTag=false
+sessionFactoryId=
+basePersistenceClass=
+genAnnotations=false
+reSettingsFile=
+configFile=/VodServer/src/hibernate.cfg.xml
+createConfigFile=true
+addLibs2Classpath=false

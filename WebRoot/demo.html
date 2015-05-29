@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Video.js | HTML5 Video Player</title>
+
+  <!-- Chang URLs to wherever Video.js files will be hosted -->
+  <link href="js/videojs/video-js.css" rel="stylesheet" type="text/css">
+  <!-- video.js must be in the <head> for older IEs to work. -->
+  <script src="js/videojs/video.js"></script>
+  <script src="js/jquery-1.11.0.min.js"></script>
+
+  <!-- Unless using the CDN hosted version, update the URL to the Flash SWF -->
+  <script>
+	function onCbClick(){
+		var req = new XMLHttpRequest();
+		req.open("GET", "file_40", true);
+        req.responseType = "arraybuffer";
+        var starttime = new Date();
+        
+        req.onprogress = function (event) {
+             console.log(event.loaded + "/" + event.total);
+        };
+
+        req.onload = function () {
+           if (req.status < 200 || req.status > 299)
+            {
+                 return;
+            }
+            var currentTime = new Date(),
+                bytes = req.response;
+            console.log("totalbyte:" + req.getResponseHeader("Content-Length"));
+        };
+
+        req.onloadend = req.onerror = function () {
+        	console.log("loadend ");
+        };
+
+        req.send();
+	}
+  </script>
+</head>
+<body>
+	<input id="ckb_adapt_1" type="checkbox" onclick="onCbClick()" checked>
+</body>
+</html>

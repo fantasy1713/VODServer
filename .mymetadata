@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="VodServer"
+  id="myeclipse.1387853441560"
+  context-root="/VodServer"
+  j2ee-spec="6.0"
+  archive="VodServer.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

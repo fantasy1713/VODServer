@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+ 	<package name="vodpackage" namespace="/vod" extends="struts-default">
+		<action name="vodrequest" class="com.vod.actions.VideoRequestAction" method="VodReqeuestAction">
+			<result name="success" type="redirectAction">
+				<param name="actionName">vodresponse</param>
+				<param name="mediaid">${mediaid}</param>
+			</result>  
+			<result name="error">
+				/error.jsp
+			</result>
+		</action>
+		<action name="vodresponse" class="com.vod.actions.VideoResponseAction" method="VodResponseAction">
+			<result name="error">
+				/error.jsp
+			</result>
+			<result name="success">
+				/videodisplay.jsp
+			</result>
+		</action>
+		<action name="downloadfile" class="com.vod.actions.DownloadMediaFileAction" method="DownloadAction">
+		</action>
+		<action name="getExistVideos" class="com.vod.actions.SearchAction" method="getExistVideos">
+			<result>/WEB-INF/pages/videolist.jsp</result>
+			<result name="error">
+				/error.jsp
+			</result>
+		</action>
+		<action name="playback" class = "com.vod.actions.VideoResponseAction" method = "playbackAction">
+			<result name="error">
+				/error.jsp
+			</result>
+			<result name="success">
+				/videodisplay.jsp
+			</result>
+		</action>
+		<action name="uploadvideo" class = "com.vod.actions.UploadAction" method = "uploadvideoAction">
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">video/mp4,video/mpeg,video/quicktime</param>
+				<param name="maximumSize">1000*1000*1000</param><!-- 1G -->
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+			<result name="error">
+				/WEB-INF/pages/videolist.jsp
+			</result>
+			<result name="input">
+				/error.jsp
+			</result>
+			<result name="success" type="chain">
+				getExistVideos
+			</result>
+		</action>
+	</package>
+</struts>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_6_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.struts2.MYECLIPSE_STRUTS21_CORE"/>
+	<classpathentry kind="con" path="melibrary.com.genuitec.eclipse.lib.hibernate41.MYECLIPSE_HIBERNATE_4_1_CORE"/>
+	<classpathentry kind="con" path="com.genuitec.runtime.library/com.genuitec.generic_5.0"/>
+	<classpathentry kind="con" path="com.genuitec.runtime.library/com.genuitec.struts_2.1">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="com.genuitec.runtime.library/com.genuitec.hibernate_4.1">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.dependency" value="WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mysql-connector-java-5.1.25-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dcampus/Workspaces/MyEclipse Professional 2014/libs/urlrewrite/urlrewritefilter-4.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dcampus/Workspaces/MyEclipse Professional 2014/libs/JSONLibraries/commons-beanutils-1.7.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dcampus/Workspaces/MyEclipse Professional 2014/libs/JSONLibraries/commons-collections.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dcampus/Workspaces/MyEclipse Professional 2014/libs/JSONLibraries/commons-lang.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dcampus/Workspaces/MyEclipse Professional 2014/libs/JSONLibraries/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dcampus/Workspaces/MyEclipse Professional 2014/libs/JSONLibraries/json-lib-2.4-jdk15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/dcampus/Workspaces/MyEclipse Professional 2014/libs/JSONLibraries/ezmorph-1.0.6.jar"/>
+	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
+</classpath>

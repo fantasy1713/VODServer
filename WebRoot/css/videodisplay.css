@@ -1,0 +1,97 @@
+div.videopanel
+{
+	width:960px;
+}
+div.videocontainer
+{
+	width: 760px;
+	height: 484px;
+	float: left;
+	background: black;
+	text-align: center
+}
+div.videoinfo
+{
+	width: 180px;
+	height: 484px;
+	float: left;
+	padding : 10px;
+}
+div.videoinfo label
+{
+	font-size:12px;
+}
+div.videoinfo legend
+{
+	font-size:14px;
+}
+
+a.pointlink
+{
+	cursor: pointer;
+}
+
+.tbselect
+{
+	width:100%;
+	border-spacing: 0px;
+}
+
+.tbselect tr
+{
+	height: 25px;
+}
+
+.tbimgsm
+{
+	width: 18px;
+}
+
+.tbpadding
+{
+	padding-left:5px;
+}
+
+.selectli
+{
+	color: #fff;
+	background: #39b3d7;
+}
+
+.disableli
+{
+	color: #fff;
+	background: #ccc;
+}
+
+.chbox
+{
+	width:20px;
+	height: 20px;
+	background-color: #dcdce3;
+}
+
+.bitratebtn
+{
+	width: 20px;
+	height: 20px;
+	line-height:20px;
+	border: 1px solid #a0a0a0;
+	cursor: pointer;
+	color: blue;
+	display:block;
+	float:right;
+	text-align: center;
+}
+
+a.bitratebtn:hover
+{
+	background: #87CEFA;
+	border: 1px solid #4876FF;
+}
+
+.fieldinfo
+{
+	margin-top: 10px;
+	padding:10px;
+}
