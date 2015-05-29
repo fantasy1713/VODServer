@@ -55,7 +55,7 @@ public class DownloadMediaFileHandler {
 			return false;
 		}
 		
-		String rootpath = formatPathString(ServletActionContext.getServletContext().getRealPath(""));
+		String rootpath =formatPathString("D:");// formatPathString(ServletActionContext.getServletContext().getRealPath(""));
 		m_filepath = formatPathString(fileinfo.getFilepath());
 		if(!m_filepath.startsWith(rootpath)){
 			setError("服务器文件存储路径错误");
