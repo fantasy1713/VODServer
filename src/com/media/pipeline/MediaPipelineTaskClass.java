@@ -1,5 +1,7 @@
 package com.media.pipeline;
 
+import java.io.File;
+
 public class MediaPipelineTaskClass {
 	private int prototypeid;
 	private int mediaid;
@@ -9,6 +11,10 @@ public class MediaPipelineTaskClass {
 	private int weblibid;
 	private String sha1value;
 	private String status;
+	private Boolean islocalupload;
+	private File uploadfile;
+	private String contentType;
+	
 
 	public String getStatus() {
 		return status;
@@ -58,4 +64,23 @@ public class MediaPipelineTaskClass {
 	public void setSha1value(String sha1value) {
 		this.sha1value = sha1value;
 	}
+	public Boolean getIslocalupload() {
+		return islocalupload;
+	}
+	public void setIslocalupload(Boolean islocalupload) {
+		this.islocalupload = islocalupload;
+	}
+	public File getUploadfile() {
+		return uploadfile;
+	}
+	public void setUploadfile(File uploadfile) {
+		this.uploadfile = uploadfile;
+	}
+	public String getContentType() {
+		return contentType;
+	}
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+	
 }
