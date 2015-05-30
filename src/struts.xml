@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
 <struts>
+<constant name="struts.multipart.maxSize" value="1073741824"/>
  	<package name="vodpackage" namespace="/vod" extends="struts-default">
 		<action name="vodrequest" class="com.vod.actions.VideoRequestAction" method="VodReqeuestAction">
 			<result name="success" type="redirectAction">
@@ -37,7 +38,7 @@
 		</action>
 		<action name="uploadvideo" class = "com.vod.actions.UploadAction" method = "uploadvideoAction">
 			<interceptor-ref name="fileUpload">
-				<param name="allowedTypes">video/mp4,video/mpeg,video/quicktime</param>
+				<!-- <param name="allowedTypes">video/mp4,video/mpeg,video/quicktime</param> -->
 				<param name="maximumSize">1000*1000*1000</param><!-- 1G -->
 			</interceptor-ref>
 			<interceptor-ref name="defaultStack"></interceptor-ref>

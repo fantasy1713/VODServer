@@ -31,7 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		</s:iterator>
   	</div>
   	<div>
-  		<form action="uploadvideo" method="post" enctype="multipart/form-data">
+  		<form action="vod/uploadvideo.action" method="post" enctype="multipart/form-data">
   			<s:file name="upload" label="选择文件" theme="simple"></s:file>
   			<input type="submit" value="上传">
   		</form>

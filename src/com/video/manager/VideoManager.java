@@ -23,8 +23,10 @@ import com.media.hash.MediaIdGenerator;
 import com.media.pipeline.MediaPipelineBuilder;
 import com.media.pipeline.UploadPipelineBuilder;
 import com.vodserver.hibernate.HibernateSessionFactory;
+import com.vodserver.hibernate.beans.Localmediafileprototype;
 import com.vodserver.hibernate.beans.Mediafileinfo;
 import com.vodserver.hibernate.beans.Mediafileprototype;
+import com.vodserver.hibernate.beans.Vodlocalmediaparams;
 import com.vodserver.hibernate.beans.Vodmedia;
 import com.vodserver.hibernate.beans.Vodmediaparams;
 import com.vodserver.hibernate.beans.VodmediaparamsId;
@@ -372,7 +374,7 @@ public class VideoManager {
 	}
 
 	/**
-	 * @author zhangfan 创建视频媒体上传过程处理
+	 * @author zhangfan 创建视频媒体上传过程处理(暂时只支持单个视频，后续添加视频组上传)
 	 * @param file
 	 * @param contentType
 	 * @param fileName
@@ -384,16 +386,57 @@ public class VideoManager {
 		// 查找是否已经纯在同名文件
 		Query query1 = sess
 				.createQuery("from Localmediafileprototype as t where t.filename=:fileName");
-		query1.setString("filename", fileName);
+		query1.setString("fileName", fileName);
 		List list = query1.list();
 		if (list != null && list.size() > 0)// 存在同名文件
 		{
 			return false;
 		}
+		// 在数据库中创建相应的媒体记录
+		Localmediafileprototype lpty = new Localmediafileprototype();
+		lpty.setFilename(fileName);
+		lpty.setIsdeleted(false);
+		lpty.setSize(file.length());
+		lpty.setCreatetime(new Timestamp(new Date().getTime()));
+		sess.save(lpty);
+		
+		String vodid = null;//唯一特征码
+		BigInteger count;
+		do {
+			vodid = MediaIdGenerator.generateMediaId();
+			String idquery = "select count(1) from vodmedia where urlstring='"
+					+ vodid + "'";
+			count = (BigInteger) sess.createSQLQuery(idquery).uniqueResult();
+		} while (count.intValue() > 0);
+		Vodmedia vodmedia = new Vodmedia(null, vodid, 1, null,
+				null, "preparing", null, null, new Timestamp(
+						new Date().getTime()), 0, null, 0, null, null,
+				new Timestamp(new Date().getTime()), 0, null);
+		sess.save(vodmedia);
+		
+		VodmediaparamsId paramid = new VodmediaparamsId();
+		paramid.setOrderindex(1);
+		paramid.setViewindex(1);
+		paramid.setVodmedia(vodmedia);
+		Vodlocalmediaparams param = new Vodlocalmediaparams();
+		param.setId(paramid);
+		param.setLocalmediafileprototype(lpty);
+		sess.save(param);
+		tran.commit();
 		// 通过流水线进行视频媒体上传
+		/*String sql = "select t1.id,t2.localsrcfileid from vodmedia as t1, vodlocalmediaparams as t2 where t1.id=t2.mediaid and t1.urlstring='"+vodid+"'";
+		Query query2 = sess.createSQLQuery(sql);
+		List list2 = query2.list();
+		if(list2==null||list2.size()<1)
+			return false;*/
+		int mediaid =(Integer)vodmedia.getId()  ;
+		int prototypeid = (Integer) lpty.getId() ;
+		
 		boolean result = UploadPipelineBuilder.addUploadTask(file, contentType,
-				fileName, ServerSettings.getUploadPath(), java.util.UUID
+				fileName, ServerSettings.getUploadPath(),prototypeid,mediaid, java.util.UUID
 						.randomUUID().toString());
+		
+		
 		if(!result){
 			return result;
 		}

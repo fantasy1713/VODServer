@@ -1,6 +1,8 @@
 package com.vodserver.hibernate.beans;
 
-import com.sun.jmx.snmp.Timestamp;
+import java.sql.Timestamp;
+
+
 
 /**
  * @author zhangfan
@@ -35,8 +37,8 @@ public class Localmediafileprototype {
 	public Timestamp getCreatetime() {
 		return createtime;
 	}
-	public void setCreatetime(Timestamp createtime) {
-		this.createtime = createtime;
+	public void setCreatetime(Timestamp timestamp) {
+		this.createtime = timestamp;
 	}
 	public Boolean getIsdeleted() {
 		return isdeleted;

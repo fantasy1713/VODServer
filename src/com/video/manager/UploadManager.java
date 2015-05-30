@@ -23,14 +23,14 @@ public class UploadManager extends MediaPipelineClass {
 			String savepath = task.getFilepath();
 			FileOutputStream fos = new FileOutputStream(savepath + "/" + filename);
 			FileInputStream fis = new FileInputStream(file);
-			byte [] buffer = new byte[2048];
+			byte [] buffer = new byte[4096];
 			int len=0;
 			while((len= fis.read(buffer))>0){
 				System.out.println(len);
 				fos.write(buffer,0,len);
 			}
-			//在localmediaprototype 表中插入相应字段
-			this.insertNewLocalPrototype(task);
+			/*//在localmediaprototype 表中插入相应字段
+			this.insertNewLocalPrototype(task);*/
 			//task完成
 			//this.taskFinished(false, task);
 			
@@ -41,7 +41,7 @@ public class UploadManager extends MediaPipelineClass {
 			return false;
 		}
 		
-		return false;
+		return true;
 	}
 	private void insertNewLocalPrototype(MediaPipelineTaskClass task){
 		
