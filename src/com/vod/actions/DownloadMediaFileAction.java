@@ -1,6 +1,10 @@
 package com.vod.actions;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
 import javax.servlet.ServletException;
@@ -43,12 +47,22 @@ public class DownloadMediaFileAction extends ActionSupport{
 			int idnum = 0;
 			idnum = Integer.parseInt(this.id);
 			DownloadMediaFileHandler handler = new DownloadMediaFileHandler();
-			if(handler.checkFileRealPath(idnum, this.seg) == true)
-				request.getRequestDispatcher(handler.getFilePath()).forward(request, response);
+			if(handler.checkFileRealPath(idnum, this.seg) == true){
+				//request.getRequestDispatcher(handler.getFilePath()).forward(request, response);
+				String path = handler.getFilePath();
+				File file = new File(path);
+				OutputStream os = response.getOutputStream();
+				if(file.exists()){
+					FileInputStream fis = new FileInputStream(file);
+					byte [] buf = new byte[4096];
+					int len=0;
+					while((len = fis.read(buf))>0){
+						os.write(buf, 0, len);
+					}
+				}
+			}
 			else
 				this.setErrorResponse(handler.getError(), response);
-		} catch (ServletException e1) {
-	//		e1.printStackTrace();
 		} catch (IOException e1) {
 	//		e1.printStackTrace();
 		} catch (NumberFormatException e1){

@@ -8,7 +8,7 @@ public class ServerSettings {
 	private static ServerSettings g_instance = new ServerSettings();
 
 	private String m_downloadfiledir, m_uploadfiledir;//原始视频，临时文件路径
-	private String m_videodir;
+	private String m_videodir,m_rootdir;
 	private int m_downloadconnects;
 	private long m_downloadspeedlimit;
 
@@ -20,6 +20,7 @@ public class ServerSettings {
 			rootdir = "/usr/local/glassfish3_confman/glassfish/domains/confman/applications/VodServer";
 			// rootdir = "D:/apache-tomcat-7.0.53/webapps/VodServer";
 		}
+		m_rootdir = rootdir;
 		m_uploadfiledir = rootdir + "/video/weblib";
 		m_downloadfiledir = rootdir + "/video/weblib";
 		m_videodir = rootdir + "/video/encoded";
@@ -36,6 +37,9 @@ public class ServerSettings {
 			dfile.mkdirs();
 	}
 
+	public static String getRootDirPath() {
+		return g_instance.m_rootdir;
+	}
 	public static String getVideoDirPath() {
 		return g_instance.m_videodir;
 	}

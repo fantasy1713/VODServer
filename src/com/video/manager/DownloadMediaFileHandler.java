@@ -6,6 +6,7 @@ import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import com.global.defines.ServerSettings;
 import com.vodserver.hibernate.HibernateSessionFactory;
 import com.vodserver.hibernate.beans.Mediafileinfo;
 
@@ -55,14 +56,15 @@ public class DownloadMediaFileHandler {
 			return false;
 		}
 		
-		String rootpath =formatPathString("D:");// formatPathString(ServletActionContext.getServletContext().getRealPath(""));
+		String rootpath =formatPathString(ServerSettings.getRootDirPath());// formatPathString(ServletActionContext.getServletContext().getRealPath(""));
 		m_filepath = formatPathString(fileinfo.getFilepath());
 		if(!m_filepath.startsWith(rootpath)){
 			setError("服务器文件存储路径错误");
 			return false;
 		}
 		
-		m_filepath = m_filepath.substring(rootpath.length()) + "/" + filename;
+		//m_filepath = m_filepath.substring(rootpath.length()) + "/" + filename;
+		m_filepath = m_filepath + "/" + filename;
 
 		m_ok = true;
 		return m_ok;
