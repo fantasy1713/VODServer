@@ -33,8 +33,9 @@ public class DownloadMediaFileAction extends ActionSupport{
 	}
 	
 	public void DownloadAction(){
+		
 		HttpServletResponse response = ServletActionContext.getResponse();
-
+		response.setCharacterEncoding("utf-8");
 	//	ServerSettings.getDashFilePath();
 
 		if(this.id == null){

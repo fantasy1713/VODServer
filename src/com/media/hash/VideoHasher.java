@@ -14,6 +14,7 @@ import com.global.defines.MediaFileStatusDefine;
 import com.media.pipeline.MediaPipelineClass;
 import com.media.pipeline.MediaPipelineTaskClass;
 import com.vodserver.hibernate.HibernateSessionFactory;
+import com.vodserver.hibernate.beans.Localmediafileprototype;
 import com.vodserver.hibernate.beans.Mediafileprototype;
 
 public class VideoHasher extends MediaPipelineClass implements FileHashCallback{
@@ -63,7 +64,7 @@ public class VideoHasher extends MediaPipelineClass implements FileHashCallback{
 	private void updateLocalPrototypeMediaInfo(MediaPipelineTaskClass task){
 		Session sen = HibernateSessionFactory.getSession();
 		Query query = sen.createQuery("from Localmediafileprototype where sha1value=:sha1").setString("sha1", task.getSha1value());
-		Mediafileprototype info = (Mediafileprototype) query.uniqueResult();
+		Localmediafileprototype info = (Localmediafileprototype) query.uniqueResult();
 		File file = new File(task.getFilepath() + "/" + task.getFilename());
 		Transaction tan = sen.beginTransaction();
 		if(info != null){

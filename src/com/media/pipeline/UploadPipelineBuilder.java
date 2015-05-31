@@ -56,7 +56,8 @@ public class UploadPipelineBuilder  extends MediaPipelineClass {
 	public static boolean addUploadTask(File file, String contentType,
 			String fileName, String uploadPath,int prototypeid,int mediaid, String UUID) {
 		MediaPipelineTaskClass task = new MediaPipelineTaskClass();
-		task.setFilename(fileName);
+//		task.setFilename(fileName);
+		task.setFilename(UUID);
 		task.setFilepath(uploadPath);
 		task.setPrototypeid(prototypeid);
 		task.setMediaid(mediaid);
