@@ -270,6 +270,16 @@ public class VideoManager {
 						+ media.getId()
 						+ " order by t1.viewindex, t1.orderindex");
 		List list = query2.list();
+		if(list==null||list.size()<1){
+			query2 = sen
+					.createSQLQuery("select t2.id, t1.viewindex, t1.orderindex, t2.filetype,"
+							+ " t2.status, t2.bitrate, t2.framerate, t2.durations, t2.size, t2.width, t2.height,"
+							+ " t2.videocodes, t2.audiocodes from vodlocalmediaparams t1,"
+							+ " mediafileinfo t2 where t1.localsrcfileid=t2.localsrcfileid and t1.mediaid="
+							+ media.getId()
+							+ " order by t1.viewindex, t1.orderindex");
+			list = query2.list();
+		}
 		MediaResponseViewJson viewinfo = null;
 		MediaResponseOrderJson orderinfo = null;
 		List<MediaResponseViewJson> viewlist = new ArrayList<MediaResponseViewJson>();
@@ -366,12 +376,22 @@ public class VideoManager {
 				return null;
 			} else
 				return (String) list.get(0);
-		} else {
-			// 云记录不存在的情况
+		} else if(mf!=null&&mf.getLocalmediafileprototype()!=null) {
+			// 云记录不存在的情况,查找本地上传
+			Integer localsrcfileid = mf.getLocalmediafileprototype().getId();
+			String hql = "select v.id.vodmedia.urlstring from Vodlocalmediaparams as v where v.localmediafileprototype.id=:localsrcfileid";
+			Query query = sess.createQuery(hql);
+			query.setInteger("localsrcfileid", localsrcfileid);
+			List list = query.list();
+			sess.close();
+			if (list == null || list.size() < 1) {
+				return null;
+			} else
+				return (String) list.get(0);
 			
-			return null;
+		
 		}
-
+		return null;
 	}
 
 	/**
