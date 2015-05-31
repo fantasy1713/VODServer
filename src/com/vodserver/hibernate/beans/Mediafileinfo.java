@@ -12,6 +12,7 @@ public class Mediafileinfo implements java.io.Serializable {
 
 	private Integer id;
 	private Mediafileprototype mediafileprototype;
+	private Localmediafileprototype localmediafileprototype;
 	private String filetype;
 	private Boolean isdeleted;
 	private String status;
@@ -37,13 +38,17 @@ public class Mediafileinfo implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public Mediafileinfo(Mediafileprototype mediafileprototype,
-			String filetype, Boolean isdeleted, String status,
-			Integer requesttimes, Timestamp deletetime, String videocodes,
-			String audiocodes, String bitrate, Float framerate, Integer width,
-			Integer height, String ratio, Float durations, String resolution,
-			Long size, String filepath, String filename) {
+	public Mediafileinfo(Integer id, Mediafileprototype mediafileprototype,
+			Localmediafileprototype localmediafileprototype, String filetype,
+			Boolean isdeleted, String status, Integer requesttimes,
+			Timestamp deletetime, String videocodes, String audiocodes,
+			String bitrate, Float framerate, Integer width, Integer height,
+			String ratio, Float durations, String resolution, Long size,
+			String filepath, String filename) {
+		super();
+		this.id = id;
 		this.mediafileprototype = mediafileprototype;
+		this.localmediafileprototype = localmediafileprototype;
 		this.filetype = filetype;
 		this.isdeleted = isdeleted;
 		this.status = status;
@@ -63,12 +68,14 @@ public class Mediafileinfo implements java.io.Serializable {
 		this.filename = filename;
 	}
 
+
 	// Property accessors
 
 	public Integer getId() {
 		return this.id;
 	}
 
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -79,6 +86,15 @@ public class Mediafileinfo implements java.io.Serializable {
 
 	public void setMediafileprototype(Mediafileprototype mediafileprototype) {
 		this.mediafileprototype = mediafileprototype;
+	}
+
+	public Localmediafileprototype getLocalmediafileprototype() {
+		return localmediafileprototype;
+	}
+
+	public void setLocalmediafileprototype(
+			Localmediafileprototype localmediafileprototype) {
+		this.localmediafileprototype = localmediafileprototype;
 	}
 
 	public String getFiletype() {

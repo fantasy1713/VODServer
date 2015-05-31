@@ -368,6 +368,7 @@ public class VideoManager {
 				return (String) list.get(0);
 		} else {
 			// 云记录不存在的情况
+			
 			return null;
 		}
 
@@ -430,7 +431,7 @@ public class VideoManager {
 		if(list2==null||list2.size()<1)
 			return false;*/
 		int mediaid =(Integer)vodmedia.getId()  ;
-		int prototypeid = (Integer) lpty.getId() ;
+		int prototypeid = (Integer) lpty.getId() ;//本地视频id
 		
 		boolean result = UploadPipelineBuilder.addUploadTask(file, contentType,
 				fileName, ServerSettings.getUploadPath(),prototypeid,mediaid, java.util.UUID

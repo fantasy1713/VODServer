@@ -45,11 +45,49 @@ public class VideoHasher extends MediaPipelineClass implements FileHashCallback{
 			m_tasklist.remove(sender);
 			task.setSha1value(sender.getHashResult());
 			//修改数据库
-			this.updatePrototypeMediaInfo(task);
+			if(task.getIslocalupload()){
+				this.updateLocalPrototypeMediaInfo(task);//修改本地上传数据库表
+			}
+			else{
+				this.updatePrototypeMediaInfo(task);
+			}
+			
 			this.taskFinished(false, task);
 		}
 	}
 	
+	/**
+	 * @author Phan
+	 * @param task
+	 */
+	private void updateLocalPrototypeMediaInfo(MediaPipelineTaskClass task){
+		Session sen = HibernateSessionFactory.getSession();
+		Query query = sen.createQuery("from Localmediafileprototype where sha1value=:sha1").setString("sha1", task.getSha1value());
+		Mediafileprototype info = (Mediafileprototype) query.uniqueResult();
+		File file = new File(task.getFilepath() + "/" + task.getFilename());
+		Transaction tan = sen.beginTransaction();
+		if(info != null){
+			if(info.getId() != task.getPrototypeid()){
+				query = sen.createSQLQuery("delete from Localmediafileprototype where id=:id");
+				query.setInteger("id", task.getPrototypeid());
+				query.executeUpdate();
+				task.setPrototypeid(info.getId());
+			}
+			//delete file
+			System.out.println("same file:" + task.getFilename() + "  sha1value:" + task.getSha1value());
+		}
+		else{
+			query = sen.createSQLQuery("update Localmediafileprototype set sha1value=:sha1, size=:size, createtime=:createtime where id=:id");
+			query.setString("sha1", task.getSha1value());
+			query.setLong("size", file.length());
+			query.setDate("createtime", new Date());
+			query.setInteger("id", task.getPrototypeid());
+			query.executeUpdate();
+			
+			System.out.println("new file:" + task.getFilename() + "  sha1value:" + task.getSha1value());
+		}
+		tan.commit();
+	}
 	private void updatePrototypeMediaInfo(MediaPipelineTaskClass task){
 		Session sen = HibernateSessionFactory.getSession();
 		Query query = sen.createQuery("from Mediafileprototype where sha1value=:sha1").setString("sha1", task.getSha1value());

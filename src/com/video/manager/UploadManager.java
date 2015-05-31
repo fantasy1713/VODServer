@@ -29,10 +29,11 @@ public class UploadManager extends MediaPipelineClass {
 				System.out.println(len);
 				fos.write(buffer,0,len);
 			}
+			fis.close();fos.close();
 			/*//在localmediaprototype 表中插入相应字段
 			this.insertNewLocalPrototype(task);*/
 			//task完成
-			//this.taskFinished(false, task);
+			this.taskFinished(false, task);
 			
 			
 		}

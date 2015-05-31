@@ -13,6 +13,9 @@
         <many-to-one name="mediafileprototype" class="com.vodserver.hibernate.beans.Mediafileprototype" fetch="select">
             <column name="srcfileid" />
         </many-to-one>
+        <many-to-one name="localmediafileprototype" class="com.vodserver.hibernate.beans.Localmediafileprototype" fetch="select">
+            <column name="localsrcfileid" />
+        </many-to-one>
         <property name="filetype" type="java.lang.String">
             <column name="filetype" length="50" />
         </property>

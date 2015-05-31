@@ -11,7 +11,7 @@ public class MediaPipelineTaskClass {
 	private int weblibid;
 	private String sha1value;
 	private String status;
-	private Boolean islocalupload;
+	private Boolean islocalupload=false;
 	private File uploadfile;
 	private String contentType;
 	
