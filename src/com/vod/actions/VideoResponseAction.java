@@ -69,10 +69,14 @@ public class VideoResponseAction extends ActionSupport{
 			if(attrCode==null){
 				return ERROR;
 			}
+			else{
+				this.mediaid = attrCode;
+				
+			}
 			
-			String params = handler.getMediaContent(attrCode);
+			/*String params = handler.getMediaContent(attrCode);
 			HttpServletRequest request = ServletActionContext.getRequest();
-			request.setAttribute("mediainfo", params);
+			request.setAttribute("mediainfo", params);*/
 		}
 		catch(Exception e){
 			e.printStackTrace();

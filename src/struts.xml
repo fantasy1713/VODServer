@@ -32,9 +32,13 @@
 			<result name="error">
 				/error.jsp
 			</result>
-			<result name="success">
+			<!-- <result name="success">
 				/videodisplay.jsp
-			</result>
+			</result> -->
+			<result name="success" type="redirectAction">
+				<param name="actionName">vodresponse</param>
+				<param name="mediaid">${mediaid}</param>
+			</result>  
 		</action>
 		<action name="uploadvideo" class = "com.vod.actions.UploadAction" method = "uploadvideoAction">
 			<interceptor-ref name="fileUpload">
