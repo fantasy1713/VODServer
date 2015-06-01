@@ -24,7 +24,7 @@ public class Mp4ConverterFactory implements IConverterFactory{
 	}
 	
 	@Override
-	public BaseConverter createConverter(String srcfilepath, String srcfilename, String outfilepath, String outfilename) {
-		return new Mp4Converter(srcfilepath, srcfilename, outfilepath, outfilename, this.getFileType());
+	public BaseConverter createConverter(String srcfilepath, String srcfilename, String outfilepath, String outfilename,String realfilename) {
+		return new Mp4Converter(srcfilepath, srcfilename, outfilepath, outfilename, this.getFileType(),realfilename);
 	}
 }

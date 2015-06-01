@@ -67,5 +67,8 @@
         <property name="filename" type="java.lang.String">
             <column name="filename" length="100" />
         </property>
+        <property name="realfilename" type="java.lang.String">
+        	<column name="realfilenaem" length="100"></column>
+        </property>
     </class>
 </hibernate-mapping>

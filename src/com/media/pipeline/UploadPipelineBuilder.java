@@ -58,7 +58,9 @@ public class UploadPipelineBuilder  extends MediaPipelineClass {
 		MediaPipelineTaskClass task = new MediaPipelineTaskClass();
 //		task.setFilename(fileName);
 		task.setFilename(UUID);
+		task.setRealfilename(fileName);
 		task.setFilepath(uploadPath);
+		
 		task.setPrototypeid(prototypeid);
 		task.setMediaid(mediaid);
 		task.setStatus(MediaFileStatusDefine.CREATED);

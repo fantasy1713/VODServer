@@ -24,13 +24,14 @@ public class Mp4Converter extends BaseConverter{
 	private ProcessBuilder m_probuilder;
 	private Process m_process;
 	
-	public Mp4Converter(String srcdir, String srcname, String targdir, String targname, String filetype){
-		super(srcdir, srcname, targdir, targname, filetype);
+	public Mp4Converter(String srcdir, String srcname, String targdir, String targname, String filetype,String realfilename){
+		super(srcdir, srcname, targdir, targname, filetype,realfilename);
 		
 		m_srcfullname = m_filepath + "/" + m_filename;
 		m_outfilename = m_outpath + "/" + m_outname;
 		m_pecent = 0;
 		m_issuccess = true;
+		m_realfilename =realfilename;
 	}
 
 	private double timeConverter(String timeString){
@@ -277,7 +278,7 @@ public class Mp4Converter extends BaseConverter{
 	
 	public static void main(String[] args){
 		long time = System.currentTimeMillis();
-		Mp4Converter con = new Mp4Converter("d:/test", "6.ts", "d:/2", "2.mp4", "mp4");
+		Mp4Converter con = new Mp4Converter("d:/test", "6.ts", "d:/2", "2.mp4", "mp4","2");
 		if(con.startConver()){
 			System.out.println("success");
 		}

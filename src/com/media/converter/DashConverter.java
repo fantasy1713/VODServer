@@ -39,13 +39,14 @@ public class DashConverter extends BaseConverter{
 	private Process m_process;
 	
 	public DashConverter(String filepath, String filename, String outpath,
-			String outname, String filetype) {
-		super(filepath, filename, outpath, outname, filetype);
+			String outname, String filetype,String realfilename) {
+		super(filepath, filename, outpath, outname, filetype,realfilename);
 		
 		m_srcfilename = filepath + "/" + filename;
 		m_tmpdirname = outpath + "/" + ConvertSettings.getDashTmpDirName();
 		m_targfullnames = new ArrayList<String>();
 		m_targetbitrates = new ArrayList<Long>();
+		m_realfilename = realfilename;
 	}
 	
 	private Boolean checkFileCodecs(){
@@ -548,7 +549,7 @@ public class DashConverter extends BaseConverter{
 	}
 	
 	public static void main(String[] args){
-		DashConverter con = new DashConverter("d:/2", "1.mp4", "d:/2", "test.mpd", "mp4");
+		DashConverter con = new DashConverter("d:/2", "1.mp4", "d:/2", "test.mpd", "mp4","test");
 		if(con.startConver()){
 			System.out.println("success");
 		}

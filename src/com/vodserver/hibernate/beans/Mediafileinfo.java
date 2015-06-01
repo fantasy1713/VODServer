@@ -30,6 +30,7 @@ public class Mediafileinfo implements java.io.Serializable {
 	private Long size;
 	private String filepath;
 	private String filename;
+	private String realfilename;
 
 	// Constructors
 
@@ -232,5 +233,14 @@ public class Mediafileinfo implements java.io.Serializable {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
+
+	public String getRealfilename() {
+		return realfilename;
+	}
+
+	public void setRealfilename(String realfilename) {
+		this.realfilename = realfilename;
+	}
+	
 
 }

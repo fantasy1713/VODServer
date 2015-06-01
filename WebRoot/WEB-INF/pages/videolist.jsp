@@ -23,9 +23,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<div>
   		<s:iterator value="result.caches">
-  		
+  		<s:if test="realfilename!=null">
+  			<s:property value="realfilename"/> &nbsp;
+  		</s:if>
+  		<s:else>
   			<s:property value="filename"/> &nbsp;
-  			
+  		</s:else>
   			<a href="vod/playback.action?id=<s:property value='id'/>">play！</a>
   			<br>
   		</s:iterator>

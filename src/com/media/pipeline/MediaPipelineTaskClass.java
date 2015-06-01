@@ -14,6 +14,7 @@ public class MediaPipelineTaskClass {
 	private Boolean islocalupload=false;
 	private File uploadfile;
 	private String contentType;
+	private String realfilename;
 	
 
 	public String getStatus() {
@@ -81,6 +82,12 @@ public class MediaPipelineTaskClass {
 	}
 	public void setContentType(String contentType) {
 		this.contentType = contentType;
+	}
+	public String getRealfilename() {
+		return realfilename;
+	}
+	public void setRealfilename(String realfilename) {
+		this.realfilename = realfilename;
 	}
 	
 }

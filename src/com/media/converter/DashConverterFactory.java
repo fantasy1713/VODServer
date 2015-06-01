@@ -25,7 +25,7 @@ public class DashConverterFactory implements IConverterFactory{
 	
 	@Override
 	public BaseConverter createConverter(String srcfilepath,
-			String srcfilename, String outfilepath, String outfilename) {
-		return new DashConverter(srcfilepath, srcfilename, outfilepath, outfilename, this.getFileType());
+			String srcfilename, String outfilepath, String outfilename,String realfilename) {
+		return new DashConverter(srcfilepath, srcfilename, outfilepath, outfilename, this.getFileType(),realfilename);
 	}
 }

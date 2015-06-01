@@ -116,7 +116,7 @@ public class ConverDirector {
 		BaseConverter mp4con = (Mp4Converter) mp4fact.createConverter(
 				task.getFilepath(), task.getFilename(),
 				mp4fact.getFileStorePath(),
-				task.getFilename() + "." + mp4fact.getFileSuffix());
+				task.getFilename() + "." + mp4fact.getFileSuffix(),task.getRealfilename());
 		Mediafileinfo mp4info = this.getMediaInfoByType(mp4fact.getFileType(),
 				list);
 		// 将媒体信息对象作为参数传入方法，并通过返回的对象来更新自己
@@ -130,7 +130,7 @@ public class ConverDirector {
 			BaseConverter dashcon = (DashConverter) dashfact.createConverter(
 					mp4con.getOutPath(), mp4con.getOutName(),
 					dashfact.getFileStorePath() + "/" + filename, filename
-							+ "." + dashfact.getFileSuffix());
+							+ "." + dashfact.getFileSuffix(),mp4con.getRealFileName());
 
 			// TODO: 由于dash是通过对mp4分片得到，因此部分参数可以直接读取得到，若要准确获得转码后参数，可以分析mpd文件获得
 			dashcon.setM_width(mp4con.getM_width());
@@ -180,6 +180,7 @@ public class ConverDirector {
 			Session sen = HibernateSessionFactory.getSession();
 			Transaction tran = sen.beginTransaction();
 			mediainfo.setFilename(con.getOutName());
+			mediainfo.setRealfilename(con.getRealFileName());
 			mediainfo.setFilepath(con.getOutPath());
 			mediainfo.setFiletype(con.getFiletype());
 			if (con.startConver() == true) {

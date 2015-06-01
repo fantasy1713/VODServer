@@ -3,6 +3,7 @@ package com.media.converter;
 public abstract class BaseConverter {
 	protected String m_filepath;
 	protected String m_filename;
+	protected String m_realfilename;
 	protected String m_outpath;
 	protected String m_outname;
 	protected boolean m_issuccess;
@@ -23,13 +24,14 @@ public abstract class BaseConverter {
 	protected String m_filetype;
 	protected int m_presetlv;
 	
-	public BaseConverter(String filepath, String filename, String outpath, String outname, String filetype){
+	public BaseConverter(String filepath, String filename, String outpath, String outname, String filetype ,String realfilename){
 		m_filepath = filepath;
 		m_filename = filename;
 		m_outpath = outpath;
 		m_outname = outname;
 		m_filetype = filetype;
 		m_presetlv = 9; 	//0-9
+		m_realfilename = realfilename;
 	}
 	
 	public int getM_presetlv() {
@@ -50,6 +52,9 @@ public abstract class BaseConverter {
 	
 	public String getFileName(){
 		return m_filename;
+	}
+	public String getRealFileName(){
+		return m_realfilename;
 	}
 	
 	public String getOutPath(){
