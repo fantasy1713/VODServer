@@ -1,8 +1,15 @@
 package com.vod.actions;
 
-import java.util.HashMap;
+import java.io.PrintWriter;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
 import com.video.manager.VideoSearchHandler;
@@ -32,6 +39,36 @@ public class SearchAction extends ActionSupport {
 		}
 		
 		return SUCCESS;
+	}
+	public void ajaxgetExistVideos(){
+		System.out.println("func getExistVideos");
+		try{
+			handler = new VideoSearchHandler();
+			List<Mediafileinfo> cachesList = handler.getExistCache();
+			this.result =new SearchResult();
+			if(cachesList!=null&&cachesList.size()>0){
+				result.caches=cachesList;
+				result.tip="FOUND";
+			}
+			else{
+				result.tip="NO CACHE";
+			}
+			JsonConfig config = new JsonConfig();
+			config.setExcludes(new String[]{"mediafileprototype","localmediafileprototype"});//除去级联循环属性
+			JSONObject json = JSONObject.fromObject(result,config); 
+			HttpServletResponse response = ServletActionContext.getResponse();
+			response.setCharacterEncoding("UTF-8");
+			PrintWriter writer = response.getWriter();
+			writer.write(json.toString());
+			writer.close();
+			
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			//return ERROR;
+		}
+		
+	//	return SUCCESS;
 	}
 
 	

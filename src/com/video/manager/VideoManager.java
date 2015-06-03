@@ -458,10 +458,8 @@ public class VideoManager {
 						.randomUUID().toString());
 		
 		
-		if(!result){
-			return result;
-		}
-		// 在数据库中创建相应的媒体记录
-		return true;
+		
+		return result;
+		
 	}
 }

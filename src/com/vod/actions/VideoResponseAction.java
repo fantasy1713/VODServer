@@ -1,6 +1,9 @@
 package com.vod.actions;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
 
@@ -84,5 +87,37 @@ public class VideoResponseAction extends ActionSupport{
 		}
 	
 		return SUCCESS;
+	}
+	/**
+	 * @author zhangfan
+	 * 作为组件时，第三方平台异步请求播放
+	 * 返回json
+	 */
+	public void ajaxplaybackAction(){
+		if(id == null)
+		{
+			return ;
+		}
+		
+		try{
+			VideoResponseHandler handler = new VideoResponseHandler();
+			
+			String attrCode = handler.getAttrCode(id);//获得缓存对应的点播特征码
+			if(attrCode==null){
+				return ;
+			}
+			else{
+				this.mediaid = attrCode;
+				String params = handler.getMediaContent(mediaid);
+				HttpServletResponse response = ServletActionContext.getResponse();
+				PrintWriter writer = response.getWriter();
+				writer.write(params);
+				writer.close();
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			return ;
+		}
 	}
 }

@@ -57,4 +57,17 @@
 			</result>
 		</action>
 	</package>
+	<package namespace="/ajax" extends="struts-default" name="vodservicepackage">
+		<action name="getExistVideos" class="com.vod.actions.SearchAction" method="ajaxgetExistVideos">
+		</action>
+		<action name="playback" class = "com.vod.actions.VideoResponseAction" method = "ajaxplaybackAction">
+		</action>
+		<action name="uploadvideo" class = "com.vod.actions.UploadAction" method = "ajaxuploadvideoAction">
+			<interceptor-ref name="fileUpload">
+				<param name="allowedTypes">video/mp4,video/mpeg,video/quicktime</param>
+				<param name="maximumSize">1000*1000*1000</param><!-- 1G -->
+			</interceptor-ref>
+			<interceptor-ref name="defaultStack"></interceptor-ref>
+		</action>
+	</package>
 </struts>
