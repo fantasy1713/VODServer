@@ -262,7 +262,7 @@ public class Mp4Converter extends BaseConverter{
 		cmdparams.add("-profile:v");
 		cmdparams.add("high");
 		cmdparams.add("-force_key_frames");
-		cmdparams.add("expr:gte(t,n_forced*" + ConvertSettings.getSegmentTime() + ")");
+		cmdparams.add("expr:gte\"(t,n_forced*" + ConvertSettings.getSegmentTime() + ")\"");
 		cmdparams.add(m_outfilename);
 		
 		for(int j=0; j<cmdparams.size(); j++){

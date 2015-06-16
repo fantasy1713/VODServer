@@ -15,7 +15,7 @@ public class ServerSettings {
 	ServerSettings() {
 		String rootdir;
 		try {
-			rootdir = "D:";//ServletActionContext.getServletContext().getRealPath("");
+			rootdir = ServletActionContext.getServletContext().getRealPath("");//"D:";////
 		} catch (Exception ex) {
 			rootdir = "/usr/local/glassfish3_confman/glassfish/domains/confman/applications/VodServer";
 			// rootdir = "D:/apache-tomcat-7.0.53/webapps/VodServer";

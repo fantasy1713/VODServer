@@ -9,6 +9,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -20,6 +21,8 @@ public class SearchAction extends ActionSupport {
 	private VideoSearchHandler handler;
 	
 	public String getExistVideos(){
+		Logger logger = Logger.getLogger("pay-log");
+		logger.info("func getExistVideos");
 		System.out.println("func getExistVideos");
 		try{
 			handler = new VideoSearchHandler();

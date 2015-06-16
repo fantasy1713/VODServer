@@ -43,4 +43,12 @@
     <dispatcher>REQUEST</dispatcher>
     <dispatcher>FORWARD</dispatcher>
   </filter-mapping>
+  <servlet>
+  <servlet-name>Log4jInit</servlet-name>
+  <servlet-class>Log4jInit</servlet-class>
+  <init-param>
+   <param-name>log4j</param-name>
+   <param-value>/WEB-INF/classes/log4j.properties</param-value>
+  </init-param>
+ </servlet>
  </web-app>

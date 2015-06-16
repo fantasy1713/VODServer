@@ -266,7 +266,7 @@ public class DashConverter extends BaseConverter{
 		cmdparams.add("-i");
 		cmdparams.add(m_srcfilename);
 		cmdparams.add("-force_key_frames");
-		cmdparams.add("expr:gte(t,n_forced*" + ConvertSettings.getSegmentTime() + ")");
+		cmdparams.add("expr:gte\"(t,n_forced*" + ConvertSettings.getSegmentTime() + ")\"");//Linux 下需要双引号，否则命令报错
 		cmdparams.add("-preset");
 		cmdparams.add(ConvertSettings.getPreset(m_presetlv));
 		cmdparams.add("-pass");
@@ -296,7 +296,7 @@ public class DashConverter extends BaseConverter{
 		cmdparams.add("-i");
 		cmdparams.add(m_srcfilename);
 		cmdparams.add("-force_key_frames");
-		cmdparams.add("expr:gte(t,n_forced*" + ConvertSettings.getSegmentTime() + ")");
+		cmdparams.add("expr:gte\"(t,n_forced*" + ConvertSettings.getSegmentTime() + ")\"");
 		cmdparams.add("-b:v");
 		cmdparams.add(String.valueOf(bitrate));
 		cmdparams.add("-profile:v");
@@ -465,6 +465,11 @@ public class DashConverter extends BaseConverter{
 		cmdparams.add(this.stringFormatByOs(m_srcfilename, iswindows));
 		cmdparams.add("-out");
 		cmdparams.add(this.stringFormatByOs(m_outpath + "/" + m_outname, iswindows));
+		
+		for(int j=0; j<cmdparams.size(); j++){
+			System.out.print(cmdparams.get(j) + " ");
+		}
+		System.out.println("");
 		
 		if(!execDashConvert(cmdparams))
 			return false;

@@ -19,6 +19,7 @@ public class DownloadFile {
 		m_info = info;
 		m_info.setM_statu(FileStatus.DOWNLOADING);
 		m_request = new HttpFileRequest("http://" + m_info.getM_host() + "/group/downloadResource.action");
+//		m_request = new HttpFileRequest("http://" + "202.38.254.208:33000" + "/group/downloadResource.action");
 		m_request.addHeader("Cookie", m_info.getM_cookie());
 		m_request.addParam("id", String.valueOf(m_info.getM_id()));
 		m_buffer = new byte[g_chunksize];

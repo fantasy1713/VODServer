@@ -74,6 +74,10 @@ public class VideoRequestHandler {
 				if(m.find()){
 					WeblibUrlInfo winfo = new WeblibUrlInfo();
 					winfo.url = url.getHost();
+					Integer port;
+					if((port = url.getPort())!=-1){
+						winfo.url+=":"+port.toString();
+					}
 					winfo.id = Integer.parseInt(m.group(1));
 					winfo.orderindex = 1;
 					winfo.viewindex = counter++;
