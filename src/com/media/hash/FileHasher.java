@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.Semaphore;
 
+import org.apache.log4j.Logger;
+
 public class FileHasher extends HashBase implements Runnable{
 	private String m_filepath;
 	private FileHashCallback m_caller;
@@ -16,7 +18,10 @@ public class FileHasher extends HashBase implements Runnable{
 	private String m_sha1value;
 	
 	public FileHasher(FileHashCallback caller, String filepath, String algo) throws NoSuchAlgorithmException{
+		
 		super(algo);
+		Logger logger = Logger.getLogger("pay-log");
+		logger.info("FileHasher-构造方法：filepath："+filepath);
 		m_caller = caller;
 		m_filepath = filepath;
 		m_buffer = new HashBuffer[g_buffercount];
@@ -24,6 +29,7 @@ public class FileHasher extends HashBase implements Runnable{
 			m_buffer[i] = new HashBuffer();
 		m_readsem = new Semaphore(g_buffercount);
 		m_writesem = new Semaphore(0);
+		logger.info("FileHasher-构造方法：finish");
 	}
 	
 	public String getHashResult(){
@@ -34,11 +40,14 @@ public class FileHasher extends HashBase implements Runnable{
 	protected String getHashValue(){
 		if(m_readthread != null)
 			m_readthread.interrupt();
-		
+		Logger logger = Logger.getLogger("pay-log");
+		logger.info("func getHashValue");
 		m_readthread = new Thread(){
 			public void run(){
 				File srcfile = new File(m_filepath);
 				if(!srcfile.exists()){
+					Logger logger = Logger.getLogger("pay-log");
+					logger.info("hash src文件不存在");
 					setError("文件不存在");
 				}
 				int writeindex = 0;
@@ -66,12 +75,14 @@ public class FileHasher extends HashBase implements Runnable{
 					m_buffer[writeindex].setM_available(true);
 					m_buffer[writeindex].setM_endblock(true);
 					m_writesem.release();
+					Logger logger = Logger.getLogger("pay-log");
+					logger.info("FileHasher异常", e);
 					e.printStackTrace();
 				}
 			}
 		};
 		m_readthread.start();
-		
+		logger.info("start getHsahResult");
 		String result = null;
 		try {
 			int readindex = 0;
@@ -94,9 +105,12 @@ public class FileHasher extends HashBase implements Runnable{
 
 			if(m_success == true)
 				result = getHexString(m_digest.digest());
+			logger.info("得到Hashresult"+result+":m_success="+m_success);
 		} catch (Exception e) {
 			setError(e.getMessage());
 			m_readthread.interrupt();
+			logger = Logger.getLogger("pay-log");
+			logger.info("FileHasher异常1", e);
 			e.printStackTrace();
 		}
 		return result;
@@ -105,6 +119,8 @@ public class FileHasher extends HashBase implements Runnable{
 	@Override
 	public void run() {
 		m_sha1value = this.getHashValue();
+		Logger logger = Logger.getLogger("pay-log");
+		logger.info("fileHasher func run: m_caller"+m_caller);
 		if(m_caller != null)
 			m_caller.hashComplete(this);
 	}

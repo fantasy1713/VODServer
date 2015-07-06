@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 import net.sf.json.JSONObject;
 
 import com.format.json.MediaFormatJson;
@@ -23,6 +25,7 @@ public class Mp4Converter extends BaseConverter{
 	
 	private ProcessBuilder m_probuilder;
 	private Process m_process;
+	Logger logger = Logger.getLogger("pay-log");
 	
 	public Mp4Converter(String srcdir, String srcname, String targdir, String targname, String filetype,String realfilename){
 		super(srcdir, srcname, targdir, targname, filetype,realfilename);
@@ -54,9 +57,14 @@ public class Mp4Converter extends BaseConverter{
 	}
 
 	private Boolean checkFileCodecs(String filename){
+		logger.info("func Mp4Converter.checkFileCodecs");
 		String info = getFileFormatInfo(filename);
+		logger.info("filename="+filename);
 		if(info == null || info.length() < 10)
+		{
+			logger.warn("info==null");
 			return null;
+		}
 		
 		Boolean result = null;
 		info = info.replace("\"default\":", "\"default1\":");
@@ -72,6 +80,7 @@ public class Mp4Converter extends BaseConverter{
 				break;
 			}
 		}
+		logger.info("func Mp4Converter.checkFileCodecs return: "+result);
 		return result;
 	}
 	
@@ -91,11 +100,12 @@ public class Mp4Converter extends BaseConverter{
 		cmdparams.add("-show_format");
 		cmdparams.add("-show_streams");
 		cmdparams.add(filename);
-		
+		StringBuffer sb = new StringBuffer();
 		for(int i=0; i<cmdparams.size(); i++){
 			System.out.print(cmdparams.get(i) + " ");
+			sb.append(cmdparams.get(i) + " ");
 		}
-		
+		logger.info(sb.toString());
 		return execAnalyze(cmdparams);
 	}
 	
@@ -124,6 +134,7 @@ public class Mp4Converter extends BaseConverter{
 	}
 
 	private boolean execConvert(List<String> cmd){
+		logger.info("func execConvert");
 		m_probuilder = new ProcessBuilder();
 		m_probuilder.redirectErrorStream(true);
 		m_probuilder.command(cmd);
@@ -136,12 +147,14 @@ public class Mp4Converter extends BaseConverter{
 			else
 				m_process.destroy();
 		} catch (IOException e) {
+			logger.error(e.getMessage(),e);
 			setError(e.getMessage());
 			e.printStackTrace();
 			return false;
 		} catch (InterruptedException e) {
 			if(m_process != null)
 				m_process.destroy();
+			logger.error("转码过程被终止"+e.getMessage(),e);
 			setError("转码过程被终止");
 			e.printStackTrace();
 			return false;
@@ -151,7 +164,7 @@ public class Mp4Converter extends BaseConverter{
 		}
 		
 		System.out.println("time spend:" + m_startime);
-		
+		logger.info("time spend:" + m_startime);
 		return true;
 	}
 	
@@ -172,6 +185,8 @@ public class Mp4Converter extends BaseConverter{
     }
 	
 	public boolean getProcessInfo(InputStream is) throws IOException {
+		logger.info("func getProcessInfo");
+		
 		boolean interrupt = false;
 		boolean startinfo = true;
 		String startRegexInfo = "Duration:(.*?), start:(.*?), bitrate:(.*?)";
@@ -181,11 +196,13 @@ public class Mp4Converter extends BaseConverter{
         BufferedReader br = new BufferedReader(new InputStreamReader(is));
         String line;
         while((line = br.readLine()) != null && (interrupt = Thread.interrupted()) == false){
+        	//logger.info("line: "+line);
             Matcher m = patten.matcher(line);
             if (m.find()) {
             	if(startinfo){
             		m_totaltime = timeConverter(m.group(1));
                     System.out.println("Mp4Converter: TotalTime " + m_totaltime);
+                    logger.info("Mp4Converter: TotalTime " + m_totaltime);
                     patten = Pattern.compile(regexDuration);
                     startinfo = false;
             	}
@@ -193,6 +210,7 @@ public class Mp4Converter extends BaseConverter{
             		m_processtime = timeConverter(m.group(5));
             		m_pecent = m_processtime / m_totaltime * 100;
             		System.out.println("Mp4Converter: Convert Process " + m_pecent);
+            		logger.info("Mp4Converter: Convert Process " + m_pecent);
             	}
             }
         }
@@ -202,11 +220,15 @@ public class Mp4Converter extends BaseConverter{
     }
 	
 	private boolean setMediaInfo(){
+		logger.info("func setMediaInfo");
 		String info = getFileFormatInfo(m_outfilename);
-		if(info == null)
+		if(info == null){
+			logger.warn("info==null");
 			return false;
+		}
 		if(info.length() < 10){
 			setError("文件转码失败");
+			logger.error("文件转码失败");
 			return false;
 		}
 		
@@ -236,18 +258,23 @@ public class Mp4Converter extends BaseConverter{
 	
 
 	public boolean startConver(){
+		
+		logger.info("func Mp4Converter。startConver");
+		
 		File srcfile = new File(m_srcfullname);
 		if(!srcfile.exists()){
 			setError("源文件不存在：" + m_srcfullname);
+			logger.info("源文件不存在：" + m_srcfullname);
 			return false;
 		}
 		
 		Boolean codescheck = this.checkFileCodecs(m_srcfullname);
 		if(codescheck == null){
+			logger.info("目标文件无视频流"+m_srcfullname);
 			setError("目标文件无视频流");
 			return false;
 		}
-		
+		logger.info("MP4Converter 目标文件有视频流"+m_srcfullname);
 		List<String> cmdparams = new LinkedList<String>();
 		cmdparams.add(ConvertSettings.getFFmpegpath());
 		cmdparams.add("-y");
@@ -262,12 +289,14 @@ public class Mp4Converter extends BaseConverter{
 		cmdparams.add("-profile:v");
 		cmdparams.add("high");
 		cmdparams.add("-force_key_frames");
-		cmdparams.add("expr:gte\"(t,n_forced*" + ConvertSettings.getSegmentTime() + ")\"");
+		cmdparams.add("expr:gte(t,n_forced*" + ConvertSettings.getSegmentTime() + ")");
 		cmdparams.add(m_outfilename);
-		
+		StringBuffer sb = new StringBuffer();
 		for(int j=0; j<cmdparams.size(); j++){
 			System.out.print(cmdparams.get(j) + " ");
+			sb.append(cmdparams.get(j) + " ");
 		}
+		logger.info(sb.toString());
 		System.out.println("");
 		
 		execConvert(cmdparams);

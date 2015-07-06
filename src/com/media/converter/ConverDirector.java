@@ -3,6 +3,7 @@ package com.media.converter;
 import java.io.File;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -15,6 +16,7 @@ import com.vodserver.hibernate.beans.Mediafileinfo;
 import com.vodserver.hibernate.beans.Mediafileprototype;
 
 public class ConverDirector {
+	Logger logger = Logger.getLogger("pay-log");
 	/*
 	 * public static void main(String []args){ ConverDirector dir = new
 	 * ConverDirector(); // for(int i=0; i<10; i++) // dir.test("6.ts", "d:\\3",
@@ -122,6 +124,7 @@ public class ConverDirector {
 		// 将媒体信息对象作为参数传入方法，并通过返回的对象来更新自己
 		mp4info = this.converOperate(mp4info, mp4con, proinfo,lproinfo);
 
+		logger.info("mp4info:"+mp4info);
 		// dash是基于mp4视频源进行的编码
 		if (mp4info != null
 				&& mp4info.getStatus() == MediaFileStatusDefine.READY) {
@@ -151,7 +154,7 @@ public class ConverDirector {
 		File srcfile = new File(task.getFilepath() + "/" + task.getFilename());
 		if(srcfile.exists()){
 			//System.out.println("exists");
-			srcfile.delete();
+			//srcfile.delete();
 		}
 		
 	}
@@ -166,6 +169,7 @@ public class ConverDirector {
 
 	private Mediafileinfo converOperate(Mediafileinfo mediainfo,
 			BaseConverter con, Mediafileprototype proinfo,Localmediafileprototype lproinfo) {
+		logger.info("func converOperate ,转码器： "+con.getClass().getName());
 		if (mediainfo == null) {
 			mediainfo = new Mediafileinfo();
 			mediainfo.setRequesttimes(0);

@@ -20,6 +20,12 @@
         <from>/file_([^/\\]+)/?([^/\\]*)$</from>
         <to type="forward">/vod/downloadfile.action?id=$1&amp;seg=$2</to>
     </rule>
+    <!-- zf -->
+    <rule>
+    	<note>将文件请求重定向至对应action，并匹配参数</note>
+        <from>/file_([^/\\]+)/?([^\\]*)/([^/\\]*)$</from>
+        <to type="forward">/vod/downloadfile.action?id=$1&amp;seg=$3</to>
+    </rule>
 
     <outbound-rule>
         <note>

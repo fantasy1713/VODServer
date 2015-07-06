@@ -2,6 +2,8 @@ package com.media.converter;
 
 import java.io.File;
 
+import org.apache.log4j.Logger;
+
 import com.global.defines.ServerSettings;
 
 public class Mp4ConverterFactory implements IConverterFactory{
@@ -9,6 +11,8 @@ public class Mp4ConverterFactory implements IConverterFactory{
 		File mfile = new File(this.getFileStorePath());
 		if(!mfile.exists())
 			mfile.mkdirs();
+		Logger logger = Logger.getLogger("pay-log");
+		logger.info("Éú³ÉÂ·¾¶"+this.getFileStorePath());
 	}
 	
 	public String getFileType(){

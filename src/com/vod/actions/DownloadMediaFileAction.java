@@ -2,17 +2,16 @@ package com.vod.actions;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.format.json.ErrorInfoFactory;
@@ -23,6 +22,8 @@ public class DownloadMediaFileAction extends ActionSupport{
 	private static final long serialVersionUID = -6066278157279798906L;
 	private String id;
 	private String seg;
+	Logger logger = Logger.getLogger("pay-log");
+	
 
 	public void setId(String id) {
 		this.id = id;
@@ -33,15 +34,20 @@ public class DownloadMediaFileAction extends ActionSupport{
 	}
 	
 	public void DownloadAction(){
+		logger.info("func DownloadAction");
 		
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setCharacterEncoding("utf-8");
 	//	ServerSettings.getDashFilePath();
 
 		if(this.id == null){
+			logger.error("缺少参数");
+			
 			this.setErrorResponse("缺少参数", response);
 			return;
 		}
+		logger.info("id= "+id);
+		logger.info("seg = "+seg);
 		
 		HttpServletRequest request = ServletActionContext.getRequest();
 		try {

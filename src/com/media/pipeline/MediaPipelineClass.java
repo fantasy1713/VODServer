@@ -1,5 +1,7 @@
 package com.media.pipeline;
 
+import org.apache.log4j.Logger;
+
 public abstract class MediaPipelineClass {
 	private MediaPipelineClass m_nextpipe;
 
@@ -21,6 +23,8 @@ public abstract class MediaPipelineClass {
 	}
 	protected void taskFinished(boolean istruncate, MediaPipelineTaskClass task){
 		if(m_nextpipe != null){
+			Logger logger = Logger.getLogger("pay-log");
+			logger.info("触发"+m_nextpipe.getClass()+"类执行节点工作");
 			m_nextpipe.taskOperate(istruncate, task);
 		}
 	}

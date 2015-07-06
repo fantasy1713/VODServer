@@ -19,6 +19,7 @@ import com.format.json.MediaResponseSegmentJson;
 import com.format.json.MediaResponseViewJson;
 import com.global.defines.MediaFileStatusDefine;
 import com.global.defines.ServerSettings;
+import com.global.defines.UUIDUtil;
 import com.media.hash.MediaIdGenerator;
 import com.media.pipeline.MediaPipelineBuilder;
 import com.media.pipeline.UploadPipelineBuilder;
@@ -216,7 +217,7 @@ public class VideoManager {
 				boolean result = MediaPipelineBuilder.addNewQuest(
 						fileinfo.weblibhost, fileinfo.weblibid,
 						fileinfo.prototypeid, ServerSettings.getDownloadPath(),
-						java.util.UUID.randomUUID().toString(), mediaid);
+						UUIDUtil.getUUID(8), mediaid);//java.util.UUID.randomUUID().toString() 避免文件名太长导致视频处理出错
 				if (result) {
 					System.out.println("add task success:" + fileinfo.weblibid);
 				} else {
@@ -454,8 +455,7 @@ public class VideoManager {
 		int prototypeid = (Integer) lpty.getId() ;//本地视频id
 		
 		boolean result = UploadPipelineBuilder.addUploadTask(file, contentType,
-				fileName, ServerSettings.getUploadPath(),prototypeid,mediaid, java.util.UUID
-						.randomUUID().toString());
+				fileName, ServerSettings.getUploadPath(),prototypeid,mediaid, UUIDUtil.getUUID(8));//java.util.UUID.randomUUID().toString() 避免文件名过长导致视频处理出错
 		
 		
 		

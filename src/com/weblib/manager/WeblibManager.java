@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
@@ -39,7 +40,10 @@ public class WeblibManager extends MediaPipelineClass implements DownloadComplet
 		
 		if(info.getM_statu() == FileStatus.FINISHED){
 			m_infolist.remove(info);
+			Logger logger = Logger.getLogger("pay-log");
+			logger.info("weblibdownloadfinsh");
 			this.taskFinished(false, info.getTask());
+			
 		}
 	}
 	
